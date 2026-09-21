@@ -1,0 +1,21 @@
+.container{
+    background-color:#C9A227 ;
+    display: flow-root;
+    padding: 20px;
+}
+h1{
+    color: white;
+    text-align: center;
+    text-shadow: 1px 1px 1px black;
+
+}
+img{
+    border: 2px solid white;
+    float: right;
+    margin-left: 20px;
+
+}
+p{
+    color: white ;
+    text-align: justify;
+}

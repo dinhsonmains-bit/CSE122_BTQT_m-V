@@ -1,0 +1,27 @@
+.container{
+    background-color: #FFFDE7 ;
+    border: 1px #9E9E9E;
+    text-align: center;
+}
+h1{
+    color: #D40000;
+    background-color: #FFD9E6;
+    font-weight: bold;
+    text-align: center;
+}
+p{
+    font-style: italic ;
+    text-align: center;
+    line-height: 1.5;
+}
+.first,.third{
+    color: #0033CC;
+}
+.second{
+    color:#D40000;
+}
+hr{
+    color: #0033CC;
+    width: 55%;
+    text-align: center;
+}
