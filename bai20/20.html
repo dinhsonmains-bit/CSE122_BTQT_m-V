@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bài 20 - Hiệu ứng ảnh với CSS Filter</title>
+  <style>
+    body {
+      background: #111827;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      color: #FFFFFF;
+    }
+
+    /* Khung ảnh: nền #1c2226, bo góc 12px */
+    .khung-anh {
+      background: #1c2226;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      max-width: 500px;
+    }
+
+    /* Dòng chữ: gradient vàng gold, in nghiêng */
+    .tieu-de-anh {
+      font-style: italic;
+      font-size: 22px;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ffd700, #ff8c00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-top: 10px;
+      margin-bottom: 25px;
+    }
+
+    /* Ảnh hoa hồng: mặc định grayscale(1) */
+    img {
+      width: 250px;
+      filter: grayscale(1);
+      transition: all 0.3s ease;
+    }
+
+    /* Thanh nút: nền #232b30, 13 nút hiệu ứng */
+    .thanh-nut {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 25px;
+      max-width: 550px;
+    }
+
+    button {
+      background: #232b30;
+      color: #cbd5e1;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background: #334155; }
+    
+    /* Nút đang chọn được tô nổi bật #0d6efd */
+    button.active {
+      background: #0d6efd;
+      color: #FFFFFF;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="khung-anh">
+    <div style="color: #94a3b8; font-size: 14px;">🌹 Hoa hồng</div>
+    <div class="tieu-de-anh">Special For You</div>
+    <img id="anh-hoa" src="hoahong.gif" alt="Hoa hồng">
+  </div>
+
+ 
+  <div class="thanh-nut">
+    <button class="active" onclick="apHieuUng(this, 'grayscale(1)')">Gray</button>
+    <button onclick="apHieuUng(this, 'invert(1)')">Xray</button>
+    <button onclick="apHieuUng(this, 'grayscale(1) invert(1)')">Invert</button>
+    <button onclick="apHieuUng(this, 'none', 'scaleX(-1)')">FlipH</button>
+    <button onclick="apHieuUng(this, 'none', 'scaleY(-1)')">FlipV</button>
+    <button onclick="apHieuUng(this, 'drop-shadow(0 0 10px #ff0000)')">Glow</button>
+    <button onclick="apHieuUng(this, 'drop-shadow(5px 5px 10px rgba(0,0,0,0.8))')">Shadow</button>
+    <button onclick="apHieuUng(this, 'drop-shadow(0 0 15px #00ffff) contrast(200%)')">Bold Shadow</button>
+    <button onclick="apHieuUng(this, 'drop-shadow(8px 8px 12px rgba(0,0,0,0.6))')">DropShadow</button>
+    <button onclick="apHieuUng(this, 'blur(3px)')">Blur</button>
+    <button onclick="apHieuUng(this, 'url(#waveFilter)')">Wave</button>
+    <button onclick="apHieuUng(this, 'contrast(500%) brightness(150%)')">Mask</button>
+    <button onclick="apHieuUng(this, 'opacity(0.4)')">Alpha</button>
+  </div>
+
+
+  <svg style="display:none;">
+    <filter id="waveFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+
+  <script>
+    function apHieuUng(btn,filterVal,transformVal = 'none'){
+        let img = document.getElementById("anh-hoa");
+        img.style.filter = filterVal;
+        img.style.transform=transformVal;
+
+        let buttons = document.querySelectorAll(".thanh-nut button");
+        buttons.forEach(b =>b.classList.remove("active"));
+        btn.classList.add("ative");
+    }
+  </script>
+
+</body>
+</html>

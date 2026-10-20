@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background: #f1f5f9;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin :0;
+        }
+        main{
+            background: #111827 ;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px;
+            width: 320px;
+        }
+        .man-hinh{
+            background: #022c22;
+            color: #4ade80;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: right;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+        #phep-tinh{
+            font-size: 14px;
+            color: #94a3b8;
+            min-height: 20px;
+        }
+        #ket-qua{
+            font-size: 32px;
+            font-weight: bold;margin-top: 5px;
+        }
+        .ban-phim{
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 10px;
+
+        }
+        button{
+            border-radius: 8px;
+            color: white;
+        }
+        .btn-so{
+            background: #25313f;
+
+        }
+        .btn-toan{
+            background: #0d6efd;
+
+        }
+        .btn-c{
+            background: red;
+        }
+        .btn-bang{
+            background: greenyellow;
+        }
+    </style>    
+</head>
+<body>
+    <main>
+        <div class="man-hinh">
+      <div id="phep-tinh"></div>
+      <div id="ket-qua">0</div>
+    </div>
+    <div class="ban-phim">
+        <button class="btn-c" onclick="xoaTatca()">C</button>
+        <button class="btn-toan" onclick="themKyHieu('(')">(</button>
+        <button class="btn-toan" onclick="themKyHieu(')')">)</button>
+        <button class="btn-toan" onclick="themKyHieu('/')">&divide;</button>
+        
+        <button class="btn-so" onclick="themKyHieu('7')">7</button>
+      <button class="btn-so" onclick="themKyHieu('8')">8</button>
+      <button class="btn-so" onclick="themKyHieu('9')">9</button>
+      <button class="btn-toan" onclick="themKyHieu('*')">&times;</button>
+
+      <button class="btn-so" onclick="themKyHieu('4')">4</button>
+      <button class="btn-so" onclick="themKyHieu('5')">5</button>
+      <button class="btn-so" onclick="themKyHieu('6')">6</button>
+      <button class="btn-toan" onclick="themKyHieu('-')">-</button>
+
+      <button class="btn-so" onclick="themKyHieu('1')">1</button>
+      <button class="btn-so" onclick="themKyHieu('2')">2</button>
+      <button class="btn-so" onclick="themKyHieu('3')">3</button>
+      <button class="btn-toan" onclick="themKyHieu('+')">+</button>
+
+      <button class="btn-so btn-0" onclick="themKyHieu('0')">0</button>
+      <button class="btn-so" onclick="themKyHieu('.')">.</button>
+      <button class="btn-bang" onclick="tinhKetQua()">=</button>
+        
+    
+    </div>
+    </main>
+    <script>
+        let bieuThuc ="";
+        function themKyHieu(val){
+            bieuThuc += val;
+            document.getElementById(phep-tinh).innerText = bieuThuc;
+        }
+        function xoaTatCa(){
+            bieuThuc = "";
+            document.getElementById(phep-tinh).innerText = "";
+            document.getElementById(ket-qua).innerText = "0";
+
+        }
+        function tinhKetQua(){
+            try{
+                let kq = eval(bieuThuc.replace(/&divide;/g,'*'))
+                document.getElementById("ket-qua").innerText = kq;        
+            } catch(err){
+                document.getElementById("ket-qua").innerText="Lỗi";
+            }
+
+        }
+    </script>
+</body>
+</html>

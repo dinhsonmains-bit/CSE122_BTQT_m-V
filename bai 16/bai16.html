@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bài 16 - Danh sách việc cần làm (To-do List)</title>
+  <style>
+    body {
+      background: #f1f5f9;
+      font-family: sans-serif;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* 1. Thẻ ứng dụng: nền #FFFFFF, bóng đổ, rộng 600px */
+    main {
+      width: 600px;
+      background: #FFFFFF;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    /* 2. Tiêu đề: nền #6d28d9, chữ #FFFFFF, kèm mô tả */
+    header {
+      background: #6d28d9;
+      color: #FFFFFF;
+      padding: 25px 30px;
+    }
+    header h1 { margin: 0 0 5px 0; font-size: 22px; }
+    header p { margin: 0; font-size: 13px; opacity: 0.9; }
+
+    .content { padding: 25px 30px; }
+
+    /* 3. Ô nhập + nút Thêm */
+    .form-them {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+    }
+    input[type="text"]:focus { border-color: #6d28d9; }
+    
+    button.btn-them {
+      background: #6d28d9;
+      color: #FFFFFF;
+      border: none;
+      padding: 0 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* 4. Danh sách việc: kẻ nét đứt #ede9fe */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px dashed #ede9fe;
+      font-size: 16px;
+      color: #334155;
+    }
+
+    .task-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    /* 5. Ô đánh dấu (Checkbox) */
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #6d28d9;
+      cursor: pointer;
+    }
+
+    /* Trạng thái hoàn thành: gạch ngang chữ */
+    .completed {
+      text-decoration: line-through;
+      color: #94a3b8;
+    }
+
+    /* 6. Nút xoá: nền #fde2e2, chữ #b91c1c */
+    button.btn-xoa {
+      background: #fde2e2;
+      color: #b91c1c;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button.btn-xoa:hover { background: #fecaca; }
+
+    /* Số việc còn lại */
+    .so-dem {
+      color: #64748b;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <header>
+      <h1>Danh sách việc cần làm</h1>
+      <p>Thêm việc mới, đánh dấu hoàn thành hoặc xoá — tất cả bằng JavaScript.</p>
+    </header>
+
+    <div class="content">
+      <!-- Ô nhập + nút Thêm -->
+      <div class="form-them">
+        <input type="text" id="input-task" placeholder="Nhập việc cần làm mới...">
+        <button class="btn-them" onclick="themCongViec()">Thêm</button>
+      </div>
+
+      <!-- Danh sách việc -->
+      <ul id="danh-sach">
+        <li>
+          <div class="task-info" onclick="toggleTask(this)">
+            <input type="checkbox" checked onclick="event.stopPropagation(); toggleCheckbox(this)">
+            <span class="completed">Đọc chương HTML5 cơ bản</span>
+          </div>
+          <button class="btn-xoa" onclick="xoaTask(this)">Xoá</button>
+        </li>
+        <li>
+          <div class="task-info" onclick="toggleTask(this)">
+            <input type="checkbox" onclick="event.stopPropagation(); toggleCheckbox(this)">
+            <span>Làm bài tập CSS Grid</span>
+          </div>
+          <button class="btn-xoa" onclick="xoaTask(this)">Xoá</button>
+        </li>
+        <li>
+          <div class="task-info" onclick="toggleTask(this)">
+            <input type="checkbox" onclick="event.stopPropagation(); toggleCheckbox(this)">
+            <span>Quay video OBS nộp bài</span>
+          </div>
+          <button class="btn-xoa" onclick="xoaTask(this)">Xoá</button>
+        </li>
+      </ul>
+
+      <div class="so-dem" id="thong-ke">Còn 2 việc chưa hoàn thành</div>
+    </div>
+  </main>
+
+  <script>
+   function capNhatSoDem(){
+    let list = document.querySelectorAll("#Danh-sach li");
+    
+    let chuaXong = 0;
+    list.forEach(li =>{
+    let checkbox = li.querySelector("input[type='checkbox']");
+        if (!checkbox.checked) chuaXong++;
+      });
+   document.getElementById("thong-ke").innerText='Còn ${chuaXong} việc chưa hoàn thành';
+}
+function themCongViec(){
+    let input = document.getElementById("input-task");
+    let text = input.value.trim();
+    li.interHTML='
+    <div class="task-info" onclick = toggletask(this)">
+        <input type="checkbox" onclick= "event.stopProgatiion(); toggleCheckbox(this)">
+        <span>${text}</span>
+        </div>
+        <button class = "btn-xoa" onclick = "xoaTask(this)">Xóa</button>
+        '
+        ;
+        ul.appendChild(li);
+        input.value = "";
+        capNhatsoDem ();
+    }
+    function toggleTask(div){
+        let check = div querySelector("input[type='checkbox']");
+        checkbox.checked = !checkbox.checked;
+        toggleCheckbox(checkbox);
+    }
+    function xoaTask(button){
+        button.parentElement.remove();
+        capNhatSodem();
+
+    }
+    capNhatSoDem();
+
+
+
+
+
+
+  </script>
+
+</body>
+</html>
